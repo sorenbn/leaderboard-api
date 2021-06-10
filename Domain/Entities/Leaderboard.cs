@@ -14,11 +14,11 @@ namespace Domain.Entities
         {
             get; set;
         }
-        public int MinAcceptedValue
+        public int? MinAcceptedValue
         {
             get; set;
         }
-        public int MaximumAcceptedValue
+        public int? MaximumAcceptedValue
         {
             get; set;
         }
