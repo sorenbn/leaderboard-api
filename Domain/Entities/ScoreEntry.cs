@@ -17,13 +17,5 @@ namespace Domain.Entities
         {
             get; set;
         }
-        public int Rank
-        {
-            get; set;
-        }
-        public DateTime Submitted
-        {
-            get; set;
-        }
     }
 }
