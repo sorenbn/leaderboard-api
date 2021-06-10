@@ -1,4 +1,5 @@
-﻿using Infrastructure.Persistence;
+﻿using Application.Contracts.Persistence;
+using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +14,9 @@ namespace Infrastructure
             {
                 options.UseSqlServer(configuration.GetConnectionString("LeaderboardAPIConnectionString"));
             });
+
+            services.AddScoped(typeof(IAsyncRepository<>), typeof(BaseRepository<>));
+            services.AddScoped<ILeaderboardRepository, LeaderboardRepository>();
 
             return services;
         }

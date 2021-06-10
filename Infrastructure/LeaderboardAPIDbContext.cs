@@ -5,7 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Persistence
+namespace Infrastructure
 {
     public class LeaderboardAPIDbContext : DbContext
     {
