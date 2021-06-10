@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Features\Leaderboard\Queries\" />
     <Folder Include="Features\ScoreEntry\" />
-    <Folder Include="Features\Leaderboard\" />
   </ItemGroup>
 
   <ItemGroup>
