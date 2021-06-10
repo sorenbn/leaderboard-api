@@ -27,12 +27,12 @@ namespace Application.Features.Leaderboards.Commands
         public class Handler : IRequestHandler<CreateLeaderboardCommand, Guid>
         {
             private readonly ILeaderboardRepository leaderboardRepository;
-            private readonly IMapper maper;
+            private readonly IMapper mapper;
 
-            public Handler(ILeaderboardRepository leaderboardRepository, IMapper maper)
+            public Handler(ILeaderboardRepository leaderboardRepository, IMapper mapper)
             {
                 this.leaderboardRepository = leaderboardRepository;
-                this.maper = maper;
+                this.mapper = mapper;
             }
 
             public async Task<Guid> Handle(CreateLeaderboardCommand request, CancellationToken cancellationToken)
@@ -43,7 +43,7 @@ namespace Application.Features.Leaderboards.Commands
                 if (result.Errors.Count > 0)
                     throw new ValidationException(result);
 
-                var leaderboard = maper.Map<Leaderboard>(request);
+                Leaderboard leaderboard = mapper.Map<Leaderboard>(request);
                 leaderboard = await leaderboardRepository.CreateAsync(leaderboard);
 
                 return leaderboard.Id;

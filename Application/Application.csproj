@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Leaderboards\Queries\" />
     <Folder Include="Features\ScoreEntry\" />
   </ItemGroup>
 

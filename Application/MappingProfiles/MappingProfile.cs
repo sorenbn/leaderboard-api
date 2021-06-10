@@ -1,4 +1,5 @@
 ﻿using Application.Features.Leaderboards.Commands;
+using Application.Features.Leaderboards.Queries;
 using AutoMapper;
 using Domain.Entities;
 
@@ -9,6 +10,7 @@ namespace Application.MappingProfiles
         public MappingProfile()
         {
             CreateMap<CreateLeaderboardCommand, Leaderboard>();
+            CreateMap<Leaderboard, LeaderboardViewModel>();
         }
     }
 }
