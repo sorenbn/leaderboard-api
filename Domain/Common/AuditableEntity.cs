@@ -2,7 +2,7 @@
 
 namespace Domain.Common
 {
-    public interface IAuditableEntity
+    public abstract class AuditableEntity
     {
         public string CreatedBy
         {
