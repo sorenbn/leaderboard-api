@@ -1,7 +1,7 @@
 ﻿using Domain.Entities;
 using System.Collections.Generic;
 
-namespace Application.Features.Leaderboards.Queries
+namespace Application.Features.Leaderboards.Queries.GetLeaderboard
 {
     public class LeaderboardViewModel
     {

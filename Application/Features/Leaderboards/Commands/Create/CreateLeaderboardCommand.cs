@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Application.Exceptions;
 
-namespace Application.Features.Leaderboards.Commands
+namespace Application.Features.Leaderboards.Commands.Create
 {
     public class CreateLeaderboardCommand : IRequest<Guid>
     {

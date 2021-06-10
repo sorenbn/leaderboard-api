@@ -1,5 +1,5 @@
-﻿using Application.Features.Leaderboards.Commands;
-using Application.Features.Leaderboards.Queries;
+﻿using Application.Features.Leaderboards.Commands.Create;
+using Application.Features.Leaderboards.Queries.GetLeaderboard;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

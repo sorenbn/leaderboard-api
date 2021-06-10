@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Application.Features.Leaderboards.Commands
+namespace Application.Features.Leaderboards.Commands.Create
 {
     public class CreateLeaderboardValidator : AbstractValidator<CreateLeaderboardCommand>
     {

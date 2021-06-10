@@ -7,7 +7,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Features.Leaderboards.Queries
+namespace Application.Features.Leaderboards.Queries.GetLeaderboard
 {
     public class GetLeaderboardQuery : IRequest<LeaderboardViewModel>
     {
