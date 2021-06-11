@@ -1,0 +1,75 @@
+﻿using Application.Contracts.Persistence;
+using Application.Exceptions;
+using AutoMapper;
+using Domain.Entities;
+using MediatR;
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace Application.Features.ScoreEntries.Commands.Post
+{
+    public class PostScoreEntryCommand : IRequest
+    {
+        public Guid LeaderboardId
+        {
+            get; set;
+        }
+        public string Username
+        {
+            get; set;
+        }
+        public int ScoreValue
+        {
+            get; set;
+        }
+
+        public class Handler : IRequestHandler<PostScoreEntryCommand>
+        {
+            private readonly ILeaderboardRepository leaderboardRepository;
+            private readonly IScoreEntryRepository scoreEntryRepository;
+            private readonly IMapper mapper;
+
+            public Handler(ILeaderboardRepository leaderboardRepository,
+                IScoreEntryRepository scoreEntryRepository,
+                IMapper mapper)
+            {
+                this.leaderboardRepository = leaderboardRepository;
+                this.scoreEntryRepository = scoreEntryRepository;
+                this.mapper = mapper;
+            }
+
+            public async Task<Unit> Handle(PostScoreEntryCommand request, CancellationToken cancellationToken)
+            {
+                var leaderboard = await leaderboardRepository.GetWithAllScoreEntriesByIdAsync(request.LeaderboardId);
+
+                if (leaderboard == null)
+                    throw new NotFoundException(nameof(leaderboard), request.LeaderboardId);
+
+                PostScoreEntryValidator validator = new(leaderboard.MinAcceptedValue, leaderboard.MaximumAcceptedValue);
+                var result = validator.Validate(request);
+
+                if (result.Errors.Count > 0)
+                    throw new ValidationException(result);
+
+                var scoreEntryEntity = await scoreEntryRepository.GetScoreEntryByUsernameAndLeaderboardId(request.Username, leaderboard.Id);
+
+                if (scoreEntryEntity != null)
+                {
+                    scoreEntryEntity.ScoreValue = request.ScoreValue;
+                    await scoreEntryRepository.UpdateAsync(scoreEntryEntity);
+                }
+                else
+                {
+                    var scoreEntry = mapper.Map<PostScoreEntryCommand, ScoreEntry>(request);
+
+                    leaderboard.ScoreEntries.Add(scoreEntry);
+                    await scoreEntryRepository.CreateAsync(scoreEntry);
+                }
+
+                return Unit.Value;
+            }
+        }
+    }
+}

@@ -9,6 +9,10 @@ namespace Domain.Entities
         {
             get; set;
         }
+        public Guid LeaderboardId 
+        { 
+            get; set; 
+        }
         public string Username
         {
             get; set;

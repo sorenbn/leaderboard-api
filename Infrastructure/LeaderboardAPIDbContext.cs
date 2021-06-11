@@ -15,6 +15,11 @@ namespace Infrastructure
             get; set;
         }
 
+        public DbSet<ScoreEntry> ScoreEntries 
+        { 
+            get; set; 
+        }
+
         public LeaderboardAPIDbContext(DbContextOptions<LeaderboardAPIDbContext> options)
             : base(options)
         {

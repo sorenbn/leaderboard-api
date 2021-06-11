@@ -17,6 +17,7 @@ namespace Infrastructure
 
             services.AddScoped(typeof(IAsyncRepository<>), typeof(BaseRepository<>));
             services.AddScoped<ILeaderboardRepository, LeaderboardRepository>();
+            services.AddScoped<IScoreEntryRepository, ScoreEntryRepository>();
 
             return services;
         }

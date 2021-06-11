@@ -22,9 +22,9 @@ namespace Domain.Entities
         {
             get; set;
         }
-        public IEnumerable<ScoreEntry> ScoreEntries
+        public IList<ScoreEntry> ScoreEntries
         {
             get; set;
-        }
+        } = new List<ScoreEntry>();
     }
 }
