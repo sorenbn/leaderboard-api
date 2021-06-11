@@ -1,9 +1,11 @@
 ﻿using Application.Features.Leaderboards.Commands.Create;
 using Application.Features.Leaderboards.Queries.GetLeaderboard;
+using Application.Features.Leaderboards.Queries.GetLeaderboardList;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
@@ -19,21 +21,27 @@ namespace WebAPI.Controllers
             this.mediator = mediator;
         }
 
-        [HttpGet(Name = "GetLeaderboard")]
-        public async Task<ActionResult<LeaderboardViewModel>> GetLeaderboardById([FromQuery] Guid id, [FromQuery] bool includeScoreEntries)
+        [HttpGet(nameof(GetLeaderboardById))]
+        public async Task<ActionResult<LeaderboardViewModel>> GetLeaderboardById([FromQuery] Guid id)
         {
             var viewModel = await mediator.Send(new GetLeaderboardQuery
             {
-                Id = id,
-                IncludeScoreEntries = includeScoreEntries
+                Id = id
             });
 
             return Ok(viewModel);
         }
 
-        [HttpPost(Name = "CreateLeaderboard")]
+        [HttpGet(nameof(GetLeaderboardList))]
+        public async Task<ActionResult<LeaderboardListViewModel>> GetLeaderboardList()
+        {
+            var viewmodel = await mediator.Send(new GetLeaderboardListQuery());
+            return Ok(viewmodel);
+        }
+
+        [HttpPost(nameof(CreateLeaderboard))]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<Guid>> Create([FromBody] CreateLeaderboardCommand requestDto)
+        public async Task<ActionResult<Guid>> CreateLeaderboard([FromBody] CreateLeaderboardCommand requestDto)
         {
             var id = await mediator.Send(requestDto);
             return Ok(id);

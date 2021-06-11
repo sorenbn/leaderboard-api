@@ -1,17 +1,20 @@
-﻿using Domain.Entities;
-using System.Collections.Generic;
+﻿using System;
 
 namespace Application.Features.Leaderboards.Queries.GetLeaderboard
 {
     public class LeaderboardViewModel
     {
+        public Guid Id { get; set; }
+
         public string Name
         {
             get; set;
         }
-
-        // TODO: Replace with ScoreEntryViewModel 
-        public IEnumerable<ScoreEntry> ScoreEntries
+        public int? MinAcceptedValue
+        {
+            get; set;
+        }
+        public int? MaximumAcceptedValue
         {
             get; set;
         }

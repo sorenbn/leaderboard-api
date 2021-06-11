@@ -16,12 +16,6 @@ namespace Application.Features.Leaderboards.Queries.GetLeaderboard
             get; set;
         }
 
-        public bool IncludeScoreEntries
-        {
-            get;
-            set;
-        }
-
         public class Handler : IRequestHandler<GetLeaderboardQuery, LeaderboardViewModel>
         {
             private readonly ILeaderboardRepository leaderboardRepository;
@@ -35,16 +29,7 @@ namespace Application.Features.Leaderboards.Queries.GetLeaderboard
 
             public async Task<LeaderboardViewModel> Handle(GetLeaderboardQuery request, CancellationToken cancellationToken)
             {
-                Leaderboard leaderboard = null;
-
-                if (request.IncludeScoreEntries)
-                {
-                    leaderboard = await leaderboardRepository.GetByIdWithScoreEntriesAsync(request.Id);
-                }
-                else
-                {
-                    leaderboard = await leaderboardRepository.GetByIdAsync(request.Id);
-                }
+                Leaderboard leaderboard = await leaderboardRepository.GetByIdAsync(request.Id);
 
                 if (leaderboard == null)
                     throw new NotFoundException(nameof(leaderboard), request.Id);
