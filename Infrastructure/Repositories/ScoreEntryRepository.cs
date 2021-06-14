@@ -2,6 +2,8 @@
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories
@@ -14,10 +16,29 @@ namespace Infrastructure.Repositories
 
         }
 
-        public async Task<ScoreEntry> GetScoreEntryByUsernameAndLeaderboardId(string username, Guid leaderboardId)
+        public async Task<IEnumerable<ScoreEntry>> GetPaginatedScoreEntries(Guid leadboardId, int pageNumber, int pageSize)
+        {
+            //TODO: Support desc/asce sorting
+            return await dbContext.ScoreEntries
+                .Where(e => e.LeaderboardId == leadboardId)
+                .OrderByDescending(e => e.ScoreValue)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
+        public async Task<ScoreEntry> GetScoreEntryByUsernameAndLeaderboardId(Guid leaderboardId, string username)
         {
             return await dbContext.ScoreEntries
-                .FirstOrDefaultAsync(x => x.Username == username && x.LeaderboardId == leaderboardId);
+                .FirstOrDefaultAsync(e => e.LeaderboardId == leaderboardId && e.Username == username);
+        }
+
+        public async Task<int> GetTotalScoreEntryCount(Guid leaderboardId)
+        {
+            return await dbContext.ScoreEntries
+                .Where(e => e.LeaderboardId == leaderboardId)
+                .CountAsync();
         }
     }
 }

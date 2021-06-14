@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using WebAPI.Filters;
 
 namespace WebAPI
 {
@@ -30,6 +31,7 @@ namespace WebAPI
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
+                c.DocumentFilter<LowerCaseDocumentFilter>();
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPI", Version = "v1" });
             });
         }

@@ -26,5 +26,7 @@ namespace Domain.Entities
         {
             get; set;
         } = new List<ScoreEntry>();
+
+        //TODO: Sorting by asce/desc
     }
 }

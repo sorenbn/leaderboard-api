@@ -4,7 +4,6 @@ using AutoMapper;
 using Domain.Entities;
 using MediatR;
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -53,7 +52,7 @@ namespace Application.Features.ScoreEntries.Commands.Post
                 if (result.Errors.Count > 0)
                     throw new ValidationException(result);
 
-                var scoreEntryEntity = await scoreEntryRepository.GetScoreEntryByUsernameAndLeaderboardId(request.Username, leaderboard.Id);
+                var scoreEntryEntity = await scoreEntryRepository.GetScoreEntryByUsernameAndLeaderboardId(leaderboard.Id, request.Username);
 
                 if (scoreEntryEntity == null)
                 {
