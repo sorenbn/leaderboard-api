@@ -14,11 +14,6 @@ namespace Infrastructure.Repositories
 
         }
 
-        public async Task<ScoreEntry> GetScoreEntryByUsernameAndLeaderboardId(string username)
-        {
-            return await dbContext.ScoreEntries.FirstOrDefaultAsync(x => x.Username == username);
-        }
-
         public async Task<ScoreEntry> GetScoreEntryByUsernameAndLeaderboardId(string username, Guid leaderboardId)
         {
             return await dbContext.ScoreEntries

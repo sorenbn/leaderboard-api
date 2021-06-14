@@ -55,17 +55,17 @@ namespace Application.Features.ScoreEntries.Commands.Post
 
                 var scoreEntryEntity = await scoreEntryRepository.GetScoreEntryByUsernameAndLeaderboardId(request.Username, leaderboard.Id);
 
-                if (scoreEntryEntity != null)
-                {
-                    scoreEntryEntity.ScoreValue = request.ScoreValue;
-                    await scoreEntryRepository.UpdateAsync(scoreEntryEntity);
-                }
-                else
+                if (scoreEntryEntity == null)
                 {
                     var scoreEntry = mapper.Map<PostScoreEntryCommand, ScoreEntry>(request);
 
                     leaderboard.ScoreEntries.Add(scoreEntry);
                     await scoreEntryRepository.CreateAsync(scoreEntry);
+                }
+                else
+                {
+                    scoreEntryEntity.ScoreValue = request.ScoreValue;
+                    await scoreEntryRepository.UpdateAsync(scoreEntryEntity);
                 }
 
                 return Unit.Value;
