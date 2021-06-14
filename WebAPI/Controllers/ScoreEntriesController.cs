@@ -13,8 +13,15 @@ namespace WebAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<ScoreEntriesListViewModel>> GetPaginatedScoreEntries([FromQuery] GetScoreEntriesQuery query)
         {
-            var result = await Mediator.Send(query);
-            return Ok(result);
+            try
+            {
+                var result = await Mediator.Send(query);
+                return Ok(result);
+            }
+            catch (ValidationException e)
+            {
+                return BadRequest(e.ValdationErrors);
+            }
         }
 
         [HttpPost]

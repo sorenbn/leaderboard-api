@@ -31,19 +31,21 @@ namespace Infrastructure
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(LeaderboardAPIDbContext).Assembly);
 
             Guid spelunkyLeaderboardId = Guid.Parse("B0788D2F-8003-43C1-92A4-EDC76A7C5DDE");
-            DateTime now = DateTime.Parse("2021-06-10 14:26:53.0995875");
 
             Random rnd = new();
+            DateTime starDate = new DateTime(1995, 1, 1);
+            int dateRange = (DateTime.Today - starDate).Days;
+
             var entries = new List<object>();
 
-            for (int i = 0; i < 500; i++)
+            for (int i = 0; i < 10000; i++)
             {
                 entries.Add(new
                 {
                     Id = Guid.NewGuid(),
                     ScoreValue = rnd.Next(10000),
                     Username = $"Sorne {i}",
-                    CreatedDate = now,
+                    CreatedDate = starDate.AddDays(rnd.Next(dateRange)),
                     LeaderboardId = spelunkyLeaderboardId,
                 });
             }
@@ -55,7 +57,7 @@ namespace Infrastructure
                 {
                     Id = spelunkyLeaderboardId,
                     Name = "Spelunky Board",
-                    CreatedDate = now,
+                    CreatedDate = starDate,
                     MinAcceptedValue = 1,
                     MaximumAcceptedValue = 9999,
                 }
