@@ -39,7 +39,7 @@ namespace Infrastructure.Repositories
                 LeaderboardId = e.LeaderboardId,
                 Username = e.Username,
                 ScoreValue = e.ScoreValue,
-                Rank = i + 1
+                Rank = i + 1 // Only way to calculate rank currently.
             })
             .Skip((pageNumber - 1) * pageSize)
             .Take(pageSize);
