@@ -1,4 +1,6 @@
-﻿namespace Application.Features.ScoreEntries.Queries.GetScoreEntries
+﻿using System;
+
+namespace Application.Features.ScoreEntries.Queries.GetScoreEntries
 {
     public class ScoreEntryViewModel
     {
@@ -11,6 +13,10 @@
             get; set;
         }
         public int Rank
+        {
+            get; set;
+        }
+        public DateTime DatePosted
         {
             get; set;
         }

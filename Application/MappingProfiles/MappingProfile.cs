@@ -22,7 +22,9 @@ namespace Application.MappingProfiles
 
             //ScoreEntries
             CreateMap<PostScoreEntryCommand, ScoreEntry>();
-            CreateMap<ScoreEntry, ScoreEntryViewModel>();
+            CreateMap<ScoreEntry, ScoreEntryViewModel>()
+                .ForMember(dest => dest.DatePosted, 
+                options => options.MapFrom(src => src.CreatedDate.Date));
             CreateMap<IEnumerable<ScoreEntry>, ScoreEntriesListViewModel>()
                 .ForMember(dest => dest.ScoreEntries, 
                 options => options.MapFrom(src => src));

@@ -25,6 +25,7 @@ namespace Infrastructure.Repositories
             var scores = await dbContext.ScoreEntries
                 .Where(e => e.LeaderboardId == leadboardId)
                 .OrderByDescending(e => e.ScoreValue)
+                    .ThenBy(e => e.CreatedDate)
                 .AsNoTracking()
                 .ToListAsync();
 
