@@ -34,6 +34,10 @@ namespace WebAPI.Controllers
                 await Mediator.Send(command);
                 return NoContent();
             }
+            catch (NotFoundException e)
+            {
+                return BadRequest(e.Message);
+            }
             catch (ValidationException e)
             {
                 return BadRequest(e.ValdationErrors);

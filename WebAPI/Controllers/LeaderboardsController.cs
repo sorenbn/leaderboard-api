@@ -1,4 +1,5 @@
-﻿using Application.Features.Leaderboards.Commands.Create;
+﻿using Application.Exceptions;
+using Application.Features.Leaderboards.Commands.Create;
 using Application.Features.Leaderboards.Queries.GetLeaderboard;
 using Application.Features.Leaderboards.Queries.GetLeaderboardList;
 using Microsoft.AspNetCore.Http;
@@ -14,12 +15,23 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<LeaderboardViewModel>> GetLeaderboardById(Guid id)
         {
-            var result = await Mediator.Send(new GetLeaderboardQuery
+            try
             {
-                Id = id
-            });
+                var result = await Mediator.Send(new GetLeaderboardQuery
+                {
+                    Id = id
+                });
 
-            return Ok(result);
+                return Ok(result);
+            }
+            catch (ValidationException e)
+            {
+                return BadRequest(e.ValdationErrors);
+            }
+            catch (NotFoundException e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpGet]
@@ -34,8 +46,15 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<Guid>> CreateLeaderboard([FromBody] CreateLeaderboardCommand command)
         {
-            var id = await Mediator.Send(command);
-            return Ok(id);
+            try
+            {
+                var id = await Mediator.Send(command);
+                return Ok(id);
+            }
+            catch (ValidationException e)
+            {
+                return BadRequest(e.ValdationErrors);
+            }
         }
     }
 }
