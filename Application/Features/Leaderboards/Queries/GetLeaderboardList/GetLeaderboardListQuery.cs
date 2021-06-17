@@ -12,10 +12,10 @@ namespace Application.Features.Leaderboards.Queries.GetLeaderboardList
     {
         public class Handler : IRequestHandler<GetLeaderboardListQuery, LeaderboardListViewModel>
         {
-            private readonly ILeaderboardRepository leaderboardRepository;
+            private readonly IAsyncRepository<Leaderboard> leaderboardRepository;
             private readonly IMapper mapper;
 
-            public Handler(ILeaderboardRepository leaderboardRepository, IMapper mapper)
+            public Handler(IAsyncRepository<Leaderboard> leaderboardRepository, IMapper mapper)
             {
                 this.leaderboardRepository = leaderboardRepository;
                 this.mapper = mapper;

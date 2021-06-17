@@ -8,7 +8,7 @@ namespace Application.UnitTests.Mocks
 {
     public class RepositoryMocks
     {
-        public static Mock<IAsyncRepository<Leaderboard>> GetLeaderboardRepository()
+        public static Mock<ILeaderboardRepository> GetLeaderboardRepository()
         {
             var leaderboards = new List<Leaderboard>
             {
@@ -36,7 +36,7 @@ namespace Application.UnitTests.Mocks
                 },
             };
 
-            Mock<IAsyncRepository<Leaderboard>> mockLeaderboardRepository = new();
+            Mock<ILeaderboardRepository> mockLeaderboardRepository = new();
 
             mockLeaderboardRepository.Setup(repo => repo.GetAllAsync()).ReturnsAsync(leaderboards);
             mockLeaderboardRepository.Setup(repo => repo.CreateAsync(It.IsAny<Leaderboard>())).ReturnsAsync(

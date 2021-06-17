@@ -5,6 +5,6 @@ namespace Application.Features.Leaderboards.Queries.GetLeaderboardList
 {
     public class LeaderboardListViewModel
     {
-        public IEnumerable<LeaderboardViewModel> Leaderboards { get; set; }
+        public ICollection<LeaderboardViewModel> Leaderboards { get; set; }
     }
 }
