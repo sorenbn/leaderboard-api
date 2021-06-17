@@ -1,5 +1,4 @@
 ﻿using Application.Contracts.Persistence;
-using Application.Features.Leaderboards.Queries.GetLeaderboard;
 using Application.Features.Leaderboards.Queries.GetLeaderboardList;
 using Application.MappingProfiles;
 using Application.UnitTests.Mocks;
@@ -30,7 +29,7 @@ namespace Application.UnitTests.Leaderboards.Queries
         }
 
         [Fact]
-        public async Task GetLeaderboardListTest()
+        public async Task GetLeaderboardListQuery_ShouldReturnFullList()
         {
             var handler = new GetLeaderboardListQuery.Handler(mockLeaderboardRepository.Object, mapper);
             var result = await handler.Handle(new GetLeaderboardListQuery(), CancellationToken.None);

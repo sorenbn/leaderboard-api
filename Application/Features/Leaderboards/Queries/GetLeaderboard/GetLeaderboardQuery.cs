@@ -29,6 +29,12 @@ namespace Application.Features.Leaderboards.Queries.GetLeaderboard
 
             public async Task<LeaderboardViewModel> Handle(GetLeaderboardQuery request, CancellationToken cancellationToken)
             {
+                GetLeaderboardQeuryValidator validator = new();
+                var result = await validator.ValidateAsync(request, cancellationToken);
+
+                if (result.Errors.Count > 0)
+                    throw new ValidationException(result);
+
                 Leaderboard leaderboard = await leaderboardRepository.GetByIdAsync(request.Id);
 
                 if (leaderboard == null)

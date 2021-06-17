@@ -3,6 +3,7 @@ using Domain.Entities;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Application.UnitTests.Mocks
 {
@@ -44,6 +45,11 @@ namespace Application.UnitTests.Mocks
                 {
                     leaderboards.Add(leaderboard);
                     return leaderboard;
+                });
+            mockLeaderboardRepository.Setup(repo => repo.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(
+                (Guid id) =>
+                {
+                    return leaderboards.FirstOrDefault(l => l.Id == id);
                 });
 
             return mockLeaderboardRepository;
