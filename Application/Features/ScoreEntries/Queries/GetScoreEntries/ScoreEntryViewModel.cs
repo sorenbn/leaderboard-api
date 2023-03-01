@@ -12,10 +12,6 @@ namespace Application.Features.ScoreEntries.Queries.GetScoreEntries
         {
             get; set;
         }
-        public int Rank
-        {
-            get; set;
-        }
         public DateTime DatePosted
         {
             get; set;
