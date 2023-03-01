@@ -19,32 +19,17 @@ namespace Infrastructure.Repositories
         public async Task<IEnumerable<ScoreEntry>> GetPaginatedScoreEntries(Guid leadboardId, int pageNumber, int pageSize)
         {
             // TODO: Support for both desc/asce sorting
-            // Also, this is probably inefficient with leaderboards which has _lots_ of score entries.
-            // Could perhaps be improved by indexing
 
             var scores = await dbContext.ScoreEntries
                 .Where(e => e.LeaderboardId == leadboardId)
                 .OrderByDescending(e => e.ScoreValue)
                     .ThenBy(e => e.CreatedDate)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
                 .AsNoTracking()
                 .ToListAsync();
 
-            var rankedScores = scores.Select((e, i) => new ScoreEntry
-            {
-                Id = e.Id,
-                CreatedBy = e.CreatedBy,
-                CreatedDate = e.CreatedDate,
-                LastModifiedBy = e.LastModifiedBy,
-                LastModifiedDate = e.LastModifiedDate,
-                LeaderboardId = e.LeaderboardId,
-                Username = e.Username,
-                ScoreValue = e.ScoreValue,
-                Rank = i + 1 // Only way to calculate rank currently.
-            })
-            .Skip((pageNumber - 1) * pageSize)
-            .Take(pageSize);
-
-            return rankedScores;
+            return scores;
         }
 
         public async Task<ScoreEntry> GetScoreEntryByUsernameAndLeaderboardId(Guid leaderboardId, string username)

@@ -1,6 +1,5 @@
 ﻿using Domain.Common;
 using System;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entities
 {
@@ -19,11 +18,6 @@ namespace Domain.Entities
             get; set;
         }
         public int ScoreValue
-        {
-            get; set;
-        }
-        [NotMapped]
-        public int Rank
         {
             get; set;
         }
