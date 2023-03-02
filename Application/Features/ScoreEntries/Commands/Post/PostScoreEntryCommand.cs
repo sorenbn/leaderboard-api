@@ -46,12 +46,6 @@ namespace Application.Features.ScoreEntries.Commands.Post
                 if (leaderboard == null)
                     throw new NotFoundException(nameof(leaderboard), request.LeaderboardId);
 
-                PostScoreEntryValidator validator = new(leaderboard.MinAcceptedValue, leaderboard.MaximumAcceptedValue);
-                var result = validator.Validate(request);
-
-                if (result.Errors.Count > 0)
-                    throw new ValidationException(result);
-
                 var scoreEntryEntity = await scoreEntryRepository.GetScoreEntryByUsernameAndLeaderboardId(leaderboard.Id, request.Username);
 
                 if (scoreEntryEntity == null)

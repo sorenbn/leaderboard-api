@@ -38,12 +38,6 @@ namespace Application.Features.ScoreEntries.Queries.GetScoreEntries
 
             public async Task<ScoreEntriesListViewModel> Handle(GetScoreEntriesQuery request, CancellationToken cancellationToken)
             {
-                GetScoreEntriesValidator validator = new();
-                var result = validator.Validate(request);
-
-                if (result.Errors.Count > 0)
-                    throw new ValidationException(result);
-
                 var scoreEntries = await scoreEntryRepository.GetPaginatedScoreEntries(request.LeaderboardId, request.PageNumber, request.PageSize);
                 var mappedScoreEntries = mapper.Map<IEnumerable<ScoreEntry>, ScoreEntriesListViewModel>(scoreEntries);
 

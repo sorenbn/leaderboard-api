@@ -1,11 +1,10 @@
 ﻿using Application.Contracts.Persistence;
-using Domain.Entities;
 using AutoMapper;
+using Domain.Entities;
 using MediatR;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Exceptions;
 
 namespace Application.Features.Leaderboards.Commands.Create
 {
@@ -37,13 +36,7 @@ namespace Application.Features.Leaderboards.Commands.Create
 
             public async Task<Guid> Handle(CreateLeaderboardCommand request, CancellationToken cancellationToken)
             {
-                CreateLeaderboardValidator validator = new ();
-                var result = await validator.ValidateAsync(request, cancellationToken);
-
-                if (result.Errors.Count > 0)
-                    throw new ValidationException(result);
-
-                Leaderboard leaderboard = mapper.Map<Leaderboard>(request);
+                var leaderboard = mapper.Map<Leaderboard>(request);
                 leaderboard = await leaderboardRepository.CreateAsync(leaderboard);
 
                 return leaderboard.Id;

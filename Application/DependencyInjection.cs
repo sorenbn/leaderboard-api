@@ -1,4 +1,7 @@
-﻿using MediatR;
+﻿using Application.Features.ScoreEntries.Commands.Post;
+using Application.Middleware;
+using FluentValidation;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -10,6 +13,9 @@ namespace Application
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddMediatR(Assembly.GetExecutingAssembly());
+
+            services.AddValidatorsFromAssemblyContaining<PostScoreEntryValidator>();
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationMiddleware<,>));
 
             return services;
         }
