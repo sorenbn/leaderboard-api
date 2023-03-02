@@ -4,7 +4,7 @@ namespace Application.Features.ScoreEntries.Queries.GetScoreEntries
 {
     public class ScoreEntriesListViewModel
     {
-        public IEnumerable<ScoreEntryViewModel> ScoreEntries
+        public IList<ScoreEntryViewModel> ScoreEntries
         {
             get; set;
         }

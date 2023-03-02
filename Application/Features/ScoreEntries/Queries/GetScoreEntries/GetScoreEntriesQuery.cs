@@ -45,7 +45,14 @@ namespace Application.Features.ScoreEntries.Queries.GetScoreEntries
                     throw new ValidationException(result);
 
                 var scoreEntries = await scoreEntryRepository.GetPaginatedScoreEntries(request.LeaderboardId, request.PageNumber, request.PageSize);
-                return mapper.Map<IEnumerable<ScoreEntry>, ScoreEntriesListViewModel>(scoreEntries);
+                var mappedScoreEntries = mapper.Map<IEnumerable<ScoreEntry>, ScoreEntriesListViewModel>(scoreEntries);
+
+                var startRank = (request.PageNumber - 1) * request.PageSize;
+
+                for (int i = 0; i < request.PageSize; i++)
+                    mappedScoreEntries.ScoreEntries[i].Rank = startRank + (i + 1);
+
+                return mappedScoreEntries;
             }
         }
     }
